@@ -1,0 +1,52 @@
+@page "/fetchdata"
+@using Facturation2.Shared
+@inject HttpClient Http
+@inject NavigationManager nav
+@inject BusinessData data
+
+<h1>Liste des factures</h1>
+
+<p>Liste des factures de l'entreprise</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Client</th>
+                <th>Date de la facture</th>
+                <th>Date de l'echeance</th>
+                <th>Montant Du</th>
+                <th>Montant Deja Regle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (BusinessFacture facture in data.getFactures())
+            {
+                <tr>
+                    <td>@facture.getNumero()</td>
+                    <td>@facture.getClient().getPrenom() @facture.getClient().getNom()</td>
+                    <td>@facture.getDateEmission()</td>
+                    <td>@facture.getDateReglementAttendu()</td>
+                    <td>@facture.getMontantDu() euros</td>
+                    <td>@facture.getMontantRegle() euros</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+    }
+
+}

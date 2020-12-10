@@ -1,0 +1,15 @@
+﻿@page "/"
+@using Facturation2.Shared
+
+@inject NavigationManager nav
+@inject BusinessData data
+
+<h1>Tableau de bord de l'entreprise</h1>
+
+<h2>Votre Chiffre d'affaire (Maintenant)</h2>
+<h3 style="color:green;">@data.totalCANow() euros</h3>
+
+
+<h2>Votre Chiffre d'affaire (Après paiement de toutes les factures en cours)</h2>
+<h3 style="color:green;">@data.totalCAAfterEveryPayments() euros</h3>
+@*<SurveyPrompt Title="How is Blazor working for you?" />*@
